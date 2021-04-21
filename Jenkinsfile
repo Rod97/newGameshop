@@ -6,7 +6,7 @@ pipeline {
     stage('Checkout') {
       steps {
         // Get some code from a GitHub repository
-        git 'https://github.com/Rod97/game-shop.git'
+        git ' https://github.com/Rod97/newGameshop.git'
       }
     }
         stage('Build') {
@@ -23,7 +23,7 @@ pipeline {
         }
         stage('DockerBuild') {
       steps {
-        sh 'docker build -t Rod97/game-shop/GameShopv2/GameShop:latestt .'
+        sh 'docker build -t Rod97/newGameshop .'
       }
         }
   }
