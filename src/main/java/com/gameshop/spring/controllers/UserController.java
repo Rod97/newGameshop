@@ -1,9 +1,9 @@
 package com.gameshop.spring.controllers;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -26,7 +26,9 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.gameshop.spring.exceptions.InvalidInputException;
 import com.gameshop.spring.exceptions.NotAllowedException;
 import com.gameshop.spring.exceptions.ResourceNotFoundException;
+import com.gameshop.spring.model.Order;
 import com.gameshop.spring.model.User;
+import com.gameshop.spring.repository.OrderRepository;
 import com.gameshop.spring.repository.UserRepository;
 import com.gameshop.spring.util.EmailUtil;
 
@@ -39,6 +41,8 @@ import com.gameshop.spring.util.EmailUtil;
 public class UserController {
 	@Autowired
 	private UserRepository userRepository;
+	@Autowired
+	private OrderRepository orderRepository;
 
 	@PostMapping("/postuser")
 	public User createUser(@RequestBody User user)
@@ -58,13 +62,22 @@ public class UserController {
 	}
 
 	//THIS RECOVERS PASSWORD DO NOT DELETE
-	@GetMapping("/{email}")
-	public void getUserByEmail(@PathVariable(value = "email") String email)
+	@GetMapping("/recover/{email}")
+	public void recoverUserByEmail(@PathVariable(value = "email") String email)
 			throws ResourceNotFoundException, NotAllowedException {
 		Example<User> userEx = Example.of(new User(email));
 		User user = userRepository.findOne(userEx).orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
 		EmailUtil.recoverPassword(email, user.getPassword());
+	}
+	
+	@GetMapping("/{email}")
+	public ResponseEntity<User> getUserByEmail(@PathVariable(value = "email") String email)
+			throws ResourceNotFoundException, NotAllowedException {
+		Example<User> userEx = Example.of(new User(email));
+		User user = userRepository.findOne(userEx).orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+		return ResponseEntity.ok().body(user);
 	}
 
 	@PutMapping("/{email}")
@@ -97,6 +110,13 @@ public class UserController {
 
 		User user = userRepository.findOne(Example.of(new User(email)))
 				.orElseThrow(() -> new ResourceNotFoundException("User not found"));
+		
+		Example<Order> example = Example.of(new Order(email));
+		List<Order> orders = orderRepository.findAll(example);
+		
+		for(Order order : orders) {
+			orderRepository.delete(order);
+		}
 
 		userRepository.delete(user);
 		Map<String, Boolean> response = new HashMap<>();

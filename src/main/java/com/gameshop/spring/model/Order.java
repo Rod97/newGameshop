@@ -23,7 +23,7 @@ public @Data class Order {
 	@Id
 	@Column(name = "invoice_number")
 	private Long invoiceNumber;
-	@ManyToOne(cascade=CascadeType.ALL)
+	@ManyToOne()
 	@JoinColumn(name = "email")
 	private User email;
 	@Column(name = "total")
