@@ -23,7 +23,7 @@ pipeline {
         }
         stage('DockerBuild') {
       steps {
-        sh 'docker build -t Rod97/newGameshop:latest .'
+        sh 'docker build -t rod97/newgameshop:latest .'
       }
         }
   }
