@@ -98,6 +98,7 @@ public class EmailUtil {
 			message.addRecipient(Message.RecipientType.TO, toAddress[0]);
 			
 			transport.sendMessage(message, message.getAllRecipients());
+			transport.close();
 		} catch (AddressException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -139,6 +140,7 @@ public class EmailUtil {
 			//send to user
 			toAddress[0] = new InternetAddress(recipient);
 			message.addRecipient(Message.RecipientType.TO, toAddress[0]);
+			transport.sendMessage(message, message.getAllRecipients());
 			
 			transport.close();
 		} catch (AddressException e) {
@@ -182,6 +184,7 @@ public class EmailUtil {
 			//send to user
 			toAddress[0] = new InternetAddress(recipient);
 			message.addRecipient(Message.RecipientType.TO, toAddress[0]);
+			transport.sendMessage(message, message.getAllRecipients());
 			
 			transport.close();
 		} catch (AddressException e) {

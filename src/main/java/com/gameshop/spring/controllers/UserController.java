@@ -63,12 +63,13 @@ public class UserController {
 
 	//THIS RECOVERS PASSWORD DO NOT DELETE
 	@GetMapping("/recover/{email}")
-	public void recoverUserByEmail(@PathVariable(value = "email") String email)
+	public ResponseEntity<String> recoverUserByEmail(@PathVariable(value = "email") String email)
 			throws ResourceNotFoundException, NotAllowedException {
 		Example<User> userEx = Example.of(new User(email));
 		User user = userRepository.findOne(userEx).orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
 		EmailUtil.recoverPassword(email, user.getPassword());
+		return ResponseEntity.ok().body("A recovery email has been sent to " + user.getEmail());
 	}
 	
 	@GetMapping("/{email}")
