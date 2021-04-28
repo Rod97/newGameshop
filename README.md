@@ -53,5 +53,5 @@ To-do list:
 
 ## Contributors
 
-> Rodrigo Flores, Max Nicholai, Jameson Bryant
+> Rodrigo Flores, Max Nicolai, Jameson Bryant
 
