@@ -14,10 +14,10 @@ public class EmailUtil {
 
 	//Emails are sent using GMail SMTP, a Gmail account is needed with the option to allow access from less secure apps
 	
-	//Email username, the part before the @
-	private static String senderName;
-	//Your password to the above email account
-	private static String senderPass;
+	//Email username, the part before the @, set here
+	private static String senderName = ;
+	//Your password to the above email account, set here
+	private static String senderPass = ;
 	private static String host = "smtp.gmail.com";
 
 	public static void accountDeleteNotification(String recipient, String first) {
