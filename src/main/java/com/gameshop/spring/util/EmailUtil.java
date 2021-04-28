@@ -12,10 +12,13 @@ import javax.mail.internet.MimeMessage;
 
 public class EmailUtil {
 
-	private static String senderName = "gameshopapp365";
-	private static String senderPass = "revProj2Gs";
+	//Emails are sent using GMail SMTP, a Gmail account is needed with the option to allow access from less secure apps
+	
+	//Email username, the part before the @
+	private static String senderName;
+	//Your password to the above email account
+	private static String senderPass;
 	private static String host = "smtp.gmail.com";
-	private static String recipients[] = { "gabe.harp1996@gmail.com" };
 
 	public static void accountDeleteNotification(String recipient, String first) {
 
@@ -33,11 +36,7 @@ public class EmailUtil {
 
 		try {
 			message.setFrom(new InternetAddress(EmailUtil.senderName));
-			InternetAddress[] toAddress = new InternetAddress[EmailUtil.recipients.length];
-
-			//send to gabe
-			toAddress[0] = new InternetAddress(recipients[0]);
-			message.addRecipient(Message.RecipientType.TO, toAddress[0]);
+			InternetAddress toAddress = new InternetAddress(recipient);
 
 			message.setSubject("Goodbye " + first + "!");
 			message.setText("Thank you for being one of our valued customers. "
@@ -48,10 +47,8 @@ public class EmailUtil {
 			Transport transport = session.getTransport("smtp");
 			transport.connect(EmailUtil.host, EmailUtil.senderName, EmailUtil.senderPass);
 			transport.sendMessage(message, message.getAllRecipients());
-			
-			//send to user
-			toAddress[0] = new InternetAddress(recipient);
-			message.addRecipient(Message.RecipientType.TO, toAddress[0]);
+		
+			message.addRecipient(Message.RecipientType.TO, toAddress);
 			
 			transport.sendMessage(message, message.getAllRecipients());
 			transport.close();
@@ -80,11 +77,7 @@ public class EmailUtil {
 
 		try {
 			message.setFrom(new InternetAddress(EmailUtil.senderName));
-			InternetAddress[] toAddress = new InternetAddress[EmailUtil.recipients.length];
-
-			//send to gabe
-			toAddress[0] = new InternetAddress(recipients[0]);
-			message.addRecipient(Message.RecipientType.TO, toAddress[0]);
+			InternetAddress toAddress = new InternetAddress(recipient);
 
 			message.setSubject("Your order has been received!");
 			message.setText(
@@ -93,9 +86,8 @@ public class EmailUtil {
 			Transport transport = session.getTransport("smtp");
 			transport.connect(EmailUtil.host, EmailUtil.senderName, EmailUtil.senderPass);
 			transport.sendMessage(message, message.getAllRecipients());
-			//send to user
-			toAddress[0] = new InternetAddress(recipient);
-			message.addRecipient(Message.RecipientType.TO, toAddress[0]);
+			
+			message.addRecipient(Message.RecipientType.TO, toAddress);
 			
 			transport.sendMessage(message, message.getAllRecipients());
 			transport.close();
@@ -124,11 +116,8 @@ public class EmailUtil {
 
 		try {
 			message.setFrom(new InternetAddress(EmailUtil.senderName));
-			InternetAddress[] toAddress = new InternetAddress[EmailUtil.recipients.length];
+			InternetAddress toAddress = new InternetAddress(recipient);
 
-			//send to gabe
-			toAddress[0] = new InternetAddress(recipients[0]);
-			message.addRecipient(Message.RecipientType.TO, toAddress[0]);
 
 			message.setSubject("Welcome");
 			message.setText("Welcome\n\nRegards,\nThe GameShop Team");
@@ -137,9 +126,7 @@ public class EmailUtil {
 			transport.connect(EmailUtil.host, EmailUtil.senderName, EmailUtil.senderPass);
 			transport.sendMessage(message, message.getAllRecipients());
 			
-			//send to user
-			toAddress[0] = new InternetAddress(recipient);
-			message.addRecipient(Message.RecipientType.TO, toAddress[0]);
+			message.addRecipient(Message.RecipientType.TO, toAddress);
 			transport.sendMessage(message, message.getAllRecipients());
 			
 			transport.close();
@@ -168,11 +155,7 @@ public class EmailUtil {
 
 		try {
 			message.setFrom(new InternetAddress(EmailUtil.senderName));
-			InternetAddress[] toAddress = new InternetAddress[EmailUtil.recipients.length];
-
-			//send to gabe
-			toAddress[0] = new InternetAddress(recipients[0]);
-			message.addRecipient(Message.RecipientType.TO, toAddress[0]);
+			InternetAddress[] toAddress = new InternetAddress(recipient);
 
 			message.setSubject("Password");
 			message.setText("Hello,\nYour password is " + password + ".\nRegards,\nThe GameShop Team");
@@ -181,9 +164,7 @@ public class EmailUtil {
 			transport.connect(EmailUtil.host, EmailUtil.senderName, EmailUtil.senderPass);
 			transport.sendMessage(message, message.getAllRecipients());
 			
-			//send to user
-			toAddress[0] = new InternetAddress(recipient);
-			message.addRecipient(Message.RecipientType.TO, toAddress[0]);
+			message.addRecipient(Message.RecipientType.TO, toAddress);
 			transport.sendMessage(message, message.getAllRecipients());
 			
 			transport.close();
